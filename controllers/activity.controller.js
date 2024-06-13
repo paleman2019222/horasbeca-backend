@@ -93,6 +93,24 @@ async function assignActivity(req, res){
 
 
 //JUAN
+async function getUserActivities(req, res) {
+    let userId = req.params.idU;
+    if (userId != req.user.sub) {
+        return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
+    }
+
+    try {
+        const activities = await Activity.find({ users:userId });
+        if (!activities.length)  {
+            return res.status(404).send({ message: 'No se encontraron actividades para este usuario' });
+        }
+        return res.status(200).send({ activities });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ message: 'Error al obtener las actividades del usuario', error });
+        
+    }
+}
 
 
 
@@ -105,6 +123,7 @@ module.exports = {
 
     //PEDRO
     //JUAN
+    getUserActivities,
     //NATAN
     assignActivity,
     

@@ -17,4 +17,8 @@ api.post('/saveActivity/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin, activity
 api.get('/getAllActivities/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllActivities);
 api.put('/assignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.assignActivity);
 
+
+//JUan 
+api.get('/getUserActivities/:idU',mdAuth.ensureAuth,activityController.getUserActivities);
+
 module.exports = api;  
