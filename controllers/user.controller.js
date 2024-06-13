@@ -2,7 +2,7 @@
 
 var User = require('../models/user.model');
 const bcryptjs = require('bcryptjs');
-
+var jwt = require("../services/jwt");
 
 
 async function createInit(req, res) {
@@ -13,6 +13,8 @@ async function createInit(req, res) {
     try {
         const userFind = await User.findOne({ email: user.email });
 
+
+   
         if (userFind) {
             console.log('No se puede agregar un nuevo usuario administrador');
         } else {
@@ -20,7 +22,8 @@ async function createInit(req, res) {
             const passwordHash = await bcryptjs.hash(user.password, saltRounds);
 
             user.name='ADMIN';
-            user.lastname='UVG'
+            user.lastname='UVG',
+            user.role= 'ROLE_ADMIN',
             user.password = passwordHash;
             const userSaved = await user.save();
 
@@ -36,7 +39,47 @@ async function createInit(req, res) {
 } 
 
 
+async function login(req, res) {
+    const body = req.body;
+    if (body.email && body.password) {
+        try {
+            const userFind = await User.findOne({ email: body.email});
+
+            if (userFind) {
+                const passwordCheck = await bcryptjs.compare(body.password, userFind.password);
+
+                if (passwordCheck) {
+                    
+                    if (body.gettoken) {
+                        console.log('Sesión iniciada');
+                        return res.status(200).send({
+                            token: jwt.createToken(userFind),
+                            user: userFind
+                        });
+
+
+                    }
+                } else {
+                    return res.status(404).send({ message: "Usuario o contraseña incorrecto(s)" });
+                }
+            }else{
+                return res.status(404).send({ message: "Usuario no encontrado"});
+            }
+        } catch (err) {
+            console.log('Error al buscar usuario', err);
+            return res.status(500).send({ message: 'Error al buscar usuario' });
+        }
+    } else {
+        return res.status(500).send({ message: 'Ingrese usuario y contraseña' });
+    }
+}
+
+
+
+
+
 
 module.exports = {
-    createInit
+    createInit,
+    login
 }
