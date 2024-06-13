@@ -36,6 +36,21 @@ async function addActivity(req,res){
     }
 
 }
+
+
+//PABLO
+
+
+//PEDRO
+
+
+//NATAN
+
+
+//JUAN
+
+
+//SAMUEL
 module.exports = {
     addActivity
 }
