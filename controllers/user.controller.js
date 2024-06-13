@@ -74,12 +74,37 @@ async function login(req, res) {
     }
 }
 
+//Lu'
+async function getProfile(req, res) {
+    try {
+        const userID = req.params.idU;
+        const userFind = await User.findOne({_id:userID});
+        if(userID != req.user.sub){
+            return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
+        }
+
+        if (!userFind) { 
+            return res.status(404).send({ message: 'Usuario no encontrado' });
+        }
+
+        return res.status(200).send({message:'Usuario encontrado', user: userFind }); 
+    } catch (err) {
+        console.log('Error al buscar usuario', err);
+        return res.status(500).send({ message: 'Error al buscar usuario' }); 
+    }
+}
+
+//juan
+
 
 
 
 
 
 module.exports = {
+    //Pablo
     createInit,
-    login
+    login,
+    //Lu'
+    getProfile,
 }
