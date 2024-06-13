@@ -13,7 +13,8 @@ api.post('/login', userController.login);
 
 
 //actividades
-api.post('/saveActivity/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin, activityController.addActivity)
+api.post('/saveActivity/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin, activityController.addActivity);
 api.get('/getAllActivities/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllActivities);
+api.put('/assignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.assignActivity);
 
 module.exports = api;  
