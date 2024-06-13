@@ -69,6 +69,7 @@ async function getAllActivities(req, res){
 //JUAN
 
 
+
 //SAMUEL
 module.exports = {
     addActivity,
