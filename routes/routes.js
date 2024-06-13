@@ -9,7 +9,7 @@ var mdAuth = require('../middlewares/authenticated');
 
 //usuario
 api.post('/login', userController.login);
-api.get('/profile', mdAuth.ensureAuth, userController.getProfile);
+api.get('/profile/:idU', mdAuth.ensureAuth, userController.getProfile);
 
 
 
