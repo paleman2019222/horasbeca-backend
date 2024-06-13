@@ -61,6 +61,32 @@ async function getAllActivities(req, res){
 }
 
 //PEDRO
+async function deleteActivity(req, res) {
+    var activityId = req.params.idA;
+    var adminId = req.params.idU;
+
+    if (adminId != req.user.sub) {
+        return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
+    }
+
+    try {
+        const activity = await Activity.findById(activityId);
+        if (!activity) {
+            return res.status(404).send({ message: 'Actividad no encontrada' });
+        }
+        if (activity.users.length > 0) {
+            return res.status(403).send({ message: 'No se puede eliminar la actividad porque tiene usuarios asignados' });
+        }
+        const activitie = await Activity.findByIdAndDelete(activityId);
+        if(activitie){
+            return res.status(200).send({ message: 'Actividad eliminada correctamente', activity });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ message: 'Error al eliminar la actividad', error });
+    }
+}
+
 
 
 //NATAN
@@ -136,6 +162,7 @@ module.exports = {
     getAllActivities,
 
     //PEDRO
+    deleteActivity,
     //JUAN
     getUserActivities,
     //NATAN
