@@ -77,6 +77,9 @@ async function login(req, res) {
 //Lu'
 async function getProfile(req, res) {
     try {
+        const userID = req.params.idU;
+        const userFind = await User.findOne({_id:userID});
+        if(userID != req.user.sub){
             return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
         }
 
