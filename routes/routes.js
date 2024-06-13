@@ -7,8 +7,9 @@ var userController = require('../controllers/user.controller');
 var activityController = require('../controllers/activity.controller')
 var mdAuth = require('../middlewares/authenticated');
 
-
+//usuario
 api.post('/login', userController.login);
+api.get('/profile', mdAuth.ensureAuth, userController.getProfile);
 
 
 
