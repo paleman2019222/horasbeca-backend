@@ -64,33 +64,47 @@ async function getAllActivities(req, res){
 
 
 //NATAN
-async function assignActivity(req, res){
+async function assignActivity(req, res) {
     var activityId = req.params.idAc;
     var adminId = req.params.idA;
     var userId = req.params.idU;
-    if(adminId != req.user.sub){
 
+    if (adminId != req.user.sub) {
         return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
     }
+
     try {
+        // Buscar la actividad
         const activity = await Activity.findById(activityId);
-        if (!activity ) {
+        if (!activity) {
             return res.status(404).send({ message: 'Actividad no encontrada' });
         }
+
+        // Verificar si el usuario ya está asignado a la actividad
         if (activity.users.includes(userId)) {
             return res.status(403).send({ message: 'El usuario ya está asignado a esta actividad' });
         }
+
+        // Asignar el usuario a la actividad
         activity.users.push(userId);
         await activity.save();
-        return res.status(200).send({ message: 'Usuario asignado a la actividad correctamente', activity })
+
+        // Buscar el usuario
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).send({ message: 'Usuario no encontrado' });
+        }
+
+        // Sumar las horas de la actividad a las horas del usuario
+        user.hours = (user.hours || 0) + activity.hours;
+        await user.save();
+
+        return res.status(200).send({ message: 'Usuario asignado a la actividad y horas actualizadas correctamente', activity, user });
     } catch (error) {
         console.log(error);
         return res.status(500).send({ message: 'Error al asignar usuario a la actividad', error });
-        
     }
-
 }
-
 
 //JUAN
 async function getUserActivities(req, res) {
