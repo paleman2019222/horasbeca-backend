@@ -10,6 +10,9 @@ async function addActivity(req,res){
     if(userID != req.user.sub){
         return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
     }
+    if (!req.body.name || !req.body.description || !req.body.place || !req.body.date || !req.body.hours) {
+        return res.status(400).send({ message: 'Ingresa todos los datos necesarios para crear una actividad' });
+    }
     try {
         const userfind = await User.findOne({_id:userID});
         if(userfind){
