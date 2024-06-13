@@ -60,6 +60,47 @@ async function getAllActivities(req, res){
 
 }
 
+async function unassignActivity(req, res) {
+    var activityId = req.params.idAc;
+    var adminId = req.params.idA;
+    var userId = req.params.idU;
+
+    if (adminId != req.user.sub) {
+        return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
+    }
+
+    try {
+       
+        const activity = await Activity.findById(activityId);
+        if (!activity) {
+            return res.status(404).send({ message: 'Actividad no encontrada' });
+        }
+
+   
+        if (!activity.users.includes(userId)) {
+            return res.status(403).send({ message: 'El usuario no está asignado a esta actividad' });
+        }
+
+  
+        activity.users.pull(userId);
+        await activity.save();
+
+       
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).send({ message: 'Usuario no encontrado' });
+        }
+
+        user.hours = (user.hours || 0) - activity.hours;
+        await user.save();
+
+        return res.status(200).send({ message: 'Usuario desasignado de la actividad y horas actualizadas correctamente', activity, user });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ message: 'Error al desasignar usuario de la actividad', error });
+    }
+}
+
 //PEDRO
 async function deleteActivity(req, res) {
     var activityId = req.params.idA;
@@ -160,7 +201,7 @@ module.exports = {
 
     //PABLO.
     getAllActivities,
-
+    unassignActivity,
     //PEDRO
     deleteActivity,
     //JUAN

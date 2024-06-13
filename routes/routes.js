@@ -19,7 +19,8 @@ api.get('/getAllActivities/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, act
 api.put('/assignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.assignActivity);
 
 
-
+//pablo
+api.post('/unassignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.unassignActivity);
 //JUan 
 api.get('/getUserActivities/:idU',mdAuth.ensureAuth,activityController.getUserActivities);
 
