@@ -39,7 +39,26 @@ async function addActivity(req,res){
 
 
 //PABLO
+async function getAllActivities(req, res){
+    var userId = req.params.idU;
+    if(userId != req.user.sub){
+        return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
+    }
 
+    try {
+        const activities = await Activity.find();
+
+        if(activities){
+            return res.status(200).send({message:'actividades encontradas', activities});
+        }else{
+            return res.status(404).send({message:'No hay actividades'});
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({message:'Error al buscar las actividades', error})
+    }
+
+}
 
 //PEDRO
 
@@ -52,5 +71,13 @@ async function addActivity(req,res){
 
 //SAMUEL
 module.exports = {
-    addActivity
+    addActivity,
+
+    //PABLO.
+    getAllActivities,
+
+    //PEDRO
+    //JUAN
+    //NATAN
+    //SAMUEL
 }

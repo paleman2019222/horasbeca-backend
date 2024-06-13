@@ -14,6 +14,6 @@ api.post('/login', userController.login);
 
 //actividades
 api.post('/saveActivity/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin, activityController.addActivity)
-
+api.get('/getAllActivities/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllActivities);
 
 module.exports = api;  

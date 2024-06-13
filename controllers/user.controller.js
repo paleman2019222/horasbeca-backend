@@ -8,7 +8,7 @@ var jwt = require("../services/jwt");
 async function createInit(req, res) {
     let user = new User();
     user.password = 'RehMQ3Jq';
-    user.email = 'admin@uvg.edu.gt';
+    user.email = 'ale22463@uvg.edu.gt';
 
     try {
         const userFind = await User.findOne({ email: user.email });
@@ -21,9 +21,9 @@ async function createInit(req, res) {
             const saltRounds = 10;
             const passwordHash = await bcryptjs.hash(user.password, saltRounds);
 
-            user.name='ADMIN';
-            user.lastname='UVG',
-            user.role= 'ROLE_ADMIN',
+            user.name='Pablo';
+            user.lastname='Alemán',
+            user.role= 'ROLE_USER',
             user.password = passwordHash;
             const userSaved = await user.save();
 

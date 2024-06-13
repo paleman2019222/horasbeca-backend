@@ -10,7 +10,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(con, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => { 
         console.log('Conectado a BD');
-        userInit.createInit();
+       // userInit.createInit();
         app.listen(port, () => {
             console.log('Servidor corriendo sin problemas', port);
         });
