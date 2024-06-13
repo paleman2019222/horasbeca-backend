@@ -9,7 +9,9 @@ var activitySchema = Schema({
     place: String,
     date: String,
     status: Boolean,
-    hours: Number
+    hours: Number,
+    users: [{type: Schema.ObjectId, ref: 'user'}]
+
 })
 
 module.exports = mongoose.model('activity', activitySchema);
