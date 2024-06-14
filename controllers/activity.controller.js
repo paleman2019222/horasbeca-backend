@@ -117,6 +117,11 @@ async function getAllUsers(req, res) {
 
 async function getActivityUsers(req, res) {
     const activityId = req.params.idA;
+    const userId = req.params.idU;
+
+    if (userId != req.user.sub) {
+        return res.status(403).send({ message: 'No tienes permiso para realizar esta acción' });
+    }
 
     try {
         const activity = await Activity.findById(activityId).populate('users');
