@@ -22,6 +22,7 @@ api.put('/assignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdm
 //pablo
 api.post('/unassignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.unassignActivity);
 api.get('/getAllUsers/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllUsers);
+api.get('/getActivityUsers/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getActivityUsers);
 //JUan 
 api.get('/getUserActivities/:idU',mdAuth.ensureAuth,activityController.getUserActivities);
 

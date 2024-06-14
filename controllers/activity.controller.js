@@ -115,6 +115,21 @@ async function getAllUsers(req, res) {
     }
 }
 
+async function getActivityUsers(req, res) {
+    const activityId = req.params.idA;
+
+    try {
+        const activity = await Activity.findById(activityId).populate('users');
+        if (!activity) {
+            return res.status(404).send({ message: 'Actividad no encontrada' });
+        }
+        return res.status(200).send({ users: activity.users });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ message: 'Error al obtener los usuarios de la actividad', error });
+    }
+}
+
 //PEDRO
 async function deleteActivity(req, res) {
     var activityId = req.params.idA;
@@ -217,6 +232,7 @@ module.exports = {
     getAllActivities,
     unassignActivity,
     getAllUsers,
+    getActivityUsers,
     //PEDRO
     deleteActivity,
     //JUAN
