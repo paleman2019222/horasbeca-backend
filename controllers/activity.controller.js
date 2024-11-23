@@ -270,6 +270,28 @@ async function getUserActivities(req, res) {
 }
 
 
+//PABLO
+
+//ELIAN
+
+//PEDRO
+
+
+//SAMUEL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //SAMUEL
 module.exports = {
@@ -288,5 +310,12 @@ module.exports = {
     //NATAN
     assignActivity,
 
-    //SAMUEL
+  //PABLO
+
+//ELIAN
+
+//PEDRO
+
+
+//SAMUEL
 }

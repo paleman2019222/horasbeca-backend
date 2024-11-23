@@ -94,8 +94,14 @@ async function getProfile(req, res) {
     }
 }
 
-//juan
+//PABLO
 
+//ELIAN
+
+//PEDRO
+
+
+//SAMUEL
 
 
 
@@ -107,4 +113,12 @@ module.exports = {
     login,
     //Lu'
     getProfile,
+    //PABLO
+
+//ELIAN
+
+//PEDRO
+
+
+//SAMUEL
 }

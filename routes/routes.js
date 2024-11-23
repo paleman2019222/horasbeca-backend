@@ -34,3 +34,13 @@ api.delete('/deleteActivity/:idA/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmi
 api.put('/assignByStudent/:idA/:idU', mdAuth.ensureAuth, activityController.assignByStudent);
 
 
+//PABLO
+
+//ELIAN
+
+//PEDRO
+
+
+//SAMUEL
+
+
