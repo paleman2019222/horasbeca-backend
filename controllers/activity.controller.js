@@ -99,21 +99,41 @@ async function markAttendance(req, res) {
             return res.status(404).send({ message: 'Actividad no encontrada' });
         }
 
+        // Verificar si el usuario está asignado a la actividad
+        if (!activity.users.includes(userId)) {
+            return res.status(403).send({ message: 'No estás asignado a esta actividad' });
+        }
+
         // Verificar si el usuario ya marcó asistencia
         if (activity.attendance.includes(userId)) {
             return res.status(403).send({ message: 'Ya has marcado asistencia para esta actividad' });
+        }
+
+        // Buscar al usuario
+        const user = await User.findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).send({ message: 'Usuario no encontrado' });
         }
 
         // Registrar la asistencia
         activity.attendance.push(userId);
         await activity.save();
 
-        return res.status(200).send({ message: 'Asistencia registrada con éxito', activity });
+        // Sumar las horas de la actividad al usuario
+        user.hours = (user.hours || 0) + activity.hours; // Sumar las horas existentes más las de la actividad
+        await user.save();
+
+        return res.status(200).send({
+            message: 'Asistencia registrada con éxito y horas actualizadas',
+            activity,
+            user
+        });
     } catch (error) {
         console.error('Error al marcar asistencia:', error);
         return res.status(500).send({ message: 'Error al marcar asistencia', error });
     }
 }
+
 
 
 async function getAllActivities(req, res) {
@@ -239,17 +259,16 @@ async function deleteActivity(req, res) {
 
 async function assignByStudent(req, res) {
     const activityId = req.params.idA; // ID de la actividad
-    const userId = req.params.idU;    // ID del usuario autenticado (estudiante)
+    const userId = req.params.idU;       // ID del usuario autenticado (estudiante)
 
     try {
         // Buscar la actividad
-        const activity = await Activity.findOne({ _id: activityId });
+        const activity = await Activity.findOne({_id: activityId});
         if (!activity) {
             return res.status(404).send({ message: 'Actividad no encontrada' });
         }
-
         // Buscar el usuario
-        const user = await User.findOne({ _id: userId });
+        const user = await User.findOne({_id: userId});
         if (!user) {
             return res.status(404).send({ message: 'Usuario no encontrado' });
         }
@@ -259,38 +278,25 @@ async function assignByStudent(req, res) {
             return res.status(403).send({ message: 'Ya estás asignado a esta actividad' });
         }
 
+
         // Asignar el usuario a la actividad
         activity.users.push(userId);
         await activity.save();
 
-        // Generar el contenido del QR
-        const qrContent = `https://www.youtube.com/watch?v=kF-wqxZPGwA`;
+        // Sumar las horas de la actividad a las horas del usuario
+        //user.hours = (user.hours || 0) + activity.hours;
+       // await user.save();
 
-        // Definir la ruta para guardar el QR
-        const qrFolderPath = path.join(__dirname, '../qr');
-        const qrFileName = `qr_${activityId}_${userId}.png`;
-        const qrFilePath = path.join(qrFolderPath, qrFileName);
-
-        // Crear la carpeta si no existe
-        if (!fs.existsSync(qrFolderPath)) {
-            fs.mkdirSync(qrFolderPath, { recursive: true });
-        }
-
-        // Generar y guardar el QR como imagen
-        await QRCode.toFile(qrFilePath, qrContent);
-
-        // Retornar respuesta con la ruta del QR
         return res.status(200).send({
-            message: 'Te has asignado a la actividad y el código QR ha sido generado',
+            message: 'Te has asignado a la actividad y tus horas han sido actualizadas correctamente',
             activity,
-            qrPath: `../qr/${qrFileName}`
+            user
         });
     } catch (error) {
         console.error('Error al asignarse a la actividad:', error);
         return res.status(500).send({ message: 'Error al asignarse a la actividad', error });
     }
 }
-
 
 //NATAN
 async function assignActivity(req, res) {
