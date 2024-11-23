@@ -14,21 +14,23 @@ api.get('/profile/:idU', mdAuth.ensureAuth, userController.getProfile);
 
 
 //actividades
-api.post('/saveActivity/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin, activityController.addActivity);
+api.post('/saveActivity/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.addActivity);
 api.get('/getAllActivities/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllActivities);
-api.put('/assignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.assignActivity);
+api.put('/assignActivity/:idA/:idAc/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.assignActivity);
 
 
 //pablo
-api.post('/unassignActivity/:idA/:idAc/:idU',mdAuth.ensureAuth,mdAuth.ensureAuthAdmin,activityController.unassignActivity);
+api.post('/unassignActivity/:idA/:idAc/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.unassignActivity);
 api.get('/getAllUsers/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllUsers);
 api.get('/getActivityUsers/:idA/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getActivityUsers);
 //JUan 
-api.get('/getUserActivities/:idU',mdAuth.ensureAuth,activityController.getUserActivities);
+api.get('/getUserActivities/:idU', mdAuth.ensureAuth, activityController.getUserActivities);
 
-module.exports = api;  
+module.exports = api;
 
 
 // Lu'
-api.delete('/deleteActivity/:idA/:idU', mdAuth.ensureAuth,mdAuth.ensureAuthAdmin, activityController.deleteActivity);
+api.delete('/deleteActivity/:idA/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.deleteActivity);
+api.put('/assignByStudent/:idA/:idU', mdAuth.ensureAuth, activityController.assignByStudent);
+
 
