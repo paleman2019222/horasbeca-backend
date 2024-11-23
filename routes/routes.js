@@ -16,12 +16,17 @@ api.get('/profile/:idU', mdAuth.ensureAuth, userController.getProfile);
 //actividades
 api.post('/saveActivity/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.addActivity);
 api.get('/getAllActivities/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllActivities);
+
+api.get('/getAllActivitiesU/:idU', mdAuth.ensureAuth, activityController.getAllActivitiesU);
+
 api.put('/assignActivity/:idA/:idAc/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.assignActivity);
 
 
 //pablo
 api.post('/unassignActivity/:idA/:idAc/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.unassignActivity);
 api.get('/getAllUsers/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getAllUsers);
+
+
 api.get('/getActivityUsers/:idA/:idU', mdAuth.ensureAuth, mdAuth.ensureAuthAdmin, activityController.getActivityUsers);
 //JUan 
 api.get('/getUserActivities/:idU', mdAuth.ensureAuth, activityController.getUserActivities);
