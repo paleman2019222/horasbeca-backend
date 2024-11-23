@@ -27,7 +27,8 @@
     "nodemailer": "^6.9.8",
     "pdfkit": "^0.14.0",
     "pdfmake": "^0.2.9",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "qrcode":"^1.4.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

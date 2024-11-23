@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
 var activitySchema = Schema({
     name: String,
     description: String,
@@ -10,8 +11,9 @@ var activitySchema = Schema({
     date: String,
     status: Boolean,
     hours: Number,
-    users: [{type: Schema.ObjectId, ref: 'user'}]
-
-})
+    qr: String, // Campo para el nombre del archivo QR
+    users: [{ type: Schema.ObjectId, ref: 'user' }],
+    attendance: [{ type: Schema.ObjectId, ref: 'user' }] // Campo para registrar asistencia
+});
 
 module.exports = mongoose.model('activity', activitySchema);

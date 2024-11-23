@@ -40,7 +40,8 @@ api.put('/assignByStudent/:idA/:idU', mdAuth.ensureAuth, activityController.assi
 
 
 //PABLO
-
+api.get('/attendance/:idA', mdAuth.ensureAuth, activityController.markAttendance);
+api.get('/activityqr/:idA', [mdAuth.ensureAuth, mdAuth.ensureAuthAdmin], activityController.getActivityQR);
 //ELIAN
 
 //PEDRO
